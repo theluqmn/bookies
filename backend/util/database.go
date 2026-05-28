@@ -12,14 +12,13 @@ func Init(sqliteFile string) error {
 	var err error
 
 	DB, err = sql.Open("sqlite3", sqliteFile)
-	if err != nil {
-		return err
-	}
+	if err != nil { return err }
 
 	_, err = DB.Exec("CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, name TEXT, password TEXT)")
-	if err != nil {
-		return err
-	}
+	if err != nil { return err }
+
+	_, err = DB.Exec("CREATE TABLE IF NOT EXISTS books (id TEXT PRIMARY KEY, title TEXT, author TEXT, description TEXT)")
+	if err != nil { return err }
 
 	return DB.Ping()
 }

@@ -1,4 +1,4 @@
-// user-related functions
+// user-related functions mostly relating to SQL
 
 package users
 

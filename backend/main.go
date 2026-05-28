@@ -13,7 +13,7 @@ func main() {
 	fmt.Println("starting server")
 
 	// initialisation
-	_ = util.Init("./database/database.sqlite")
+	_ = util.Init("./database.sqlite")
 
 	e := echo.New()
 	e.HideBanner = true
