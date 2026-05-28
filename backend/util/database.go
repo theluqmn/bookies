@@ -20,5 +20,8 @@ func Init(sqliteFile string) error {
 	_, err = DB.Exec("CREATE TABLE IF NOT EXISTS books (id TEXT PRIMARY KEY, title TEXT, author TEXT, description TEXT)")
 	if err != nil { return err }
 
+	_, err = DB.Exec("CREATE TABLE IF NOT EXISTS essays (id TEXT PRIMARY KEY, language TEXT, title TEXT, author TEXT, content TEXT, meta TEXT")
+	if err != nil { return err }
+
 	return DB.Ping()
 }
