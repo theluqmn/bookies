@@ -16,7 +16,7 @@ import (
 var sessions = make(map[string]string)
 
 func SignupHandler(c echo.Context) error { // POST /signup
-	var id string // required, between 4 and 64 characters
+	var id string // required, 4 to 64 characters
 	q1 := strings.ToLower(c.QueryParam("id"))
 	if q1 == "" {
 		return c.JSON(400, "an ID is required!")
@@ -27,7 +27,7 @@ func SignupHandler(c echo.Context) error { // POST /signup
 	}
 	id = q1
 
-	var name string // optional, defaults to the ID, and is between 2 and 96 characters
+	var name string // optional, defaults to the ID, 2 to 96 characters
 	q2 := c.QueryParam("name")
 	if q2 == "" {
 		q2 = id
@@ -36,7 +36,7 @@ func SignupHandler(c echo.Context) error { // POST /signup
 	}
 	name = q2
 
-	var password string // required, between 8 and 64 characters
+	var password string // required, 8 to 64 characters
 	q3 := c.QueryParam("password")
 	if q3 == "" {
 		return c.JSON(400, "a password is required!")

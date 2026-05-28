@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"main/books"
 	"main/users"
 	"main/util"
 
@@ -28,6 +29,7 @@ func main() {
 	// API URLs
 	e.POST("/signup", users.SignupHandler)
 	e.POST("/login", users.LoginHandler)
+	e.POST("/books", books.AddBookHandler)
 
 	// HTMX URLs
 
