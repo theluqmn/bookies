@@ -4,7 +4,7 @@
 
 - user
   - [x] signup
-  - [ ] login
+  - [x] login
   - [ ] delete account
 - books
   - [ ] add a new book

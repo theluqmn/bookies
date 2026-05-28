@@ -25,8 +25,11 @@ func main() {
 		return c.JSON(200, "Hello from the Bookies server!")
 	})
 
-	e.POST("/signup", users.SignUpHandler)
+	// API URLs
+	e.POST("/signup", users.SignupHandler)
 	e.POST("/login", users.LoginHandler)
+
+	// HTMX URLs
 
 	fmt.Println("server is now online")
 	e.Logger.Fatal(e.Start(":6969"))

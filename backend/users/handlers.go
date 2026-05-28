@@ -15,7 +15,7 @@ import (
 
 var sessions = make(map[string]string)
 
-func SignUpHandler(c echo.Context) error { // POST /signup
+func SignupHandler(c echo.Context) error { // POST /signup
 	var id string // required, between 4 and 64 characters
 	q1 := strings.ToLower(c.QueryParam("id"))
 	if q1 == "" {
