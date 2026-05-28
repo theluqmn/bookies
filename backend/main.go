@@ -28,7 +28,8 @@ func main() {
 	// API URLs
 	e.POST("/signup", routes.SignupHandler)
 	e.POST("/login", routes.LoginHandler)
-	e.POST("/books", routes.AddBookHandler)
+	// e.POST("/books", routes.AddBookHandler)
+	e.POST("/essays", routes.EssayCreateHandler)
 
 	// frontend URLs
 	e.File("/", "../frontend/index.html")

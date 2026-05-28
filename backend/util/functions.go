@@ -3,6 +3,9 @@
 package util
 
 import (
+	"crypto/rand"
+	"encoding/base64"
+	"fmt"
 	"os"
 	"os/exec"
 
@@ -23,4 +26,15 @@ func Clear() {
 	cmd := exec.Command("cmd", "/c", "cls")
 	cmd.Stdout = os.Stdout
 	cmd.Run()
+}
+
+func GenerateRandomID(size int) string {
+	b := make([]byte, size)
+
+	_, err := rand.Read(b)
+	if err != nil {
+		fmt.Println(err)
+	}
+	
+	return base64.URLEncoding.WithPadding(base64.NoPadding).EncodeToString(b)
 }
