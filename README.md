@@ -6,10 +6,16 @@
 - Write essays for other users to read and rate!
 - Earn points!
 
+Check out our [to-do list](https://github.com/theluqmn/bookies/blob/main/TODO.md)
+
 ## Technical
 
-- users(id, name, password)
-- essays(id, language, title, author, content, meta)
+Database schema:
+
+- `users(id, name, password)`
+- `essays(id, language, title, author, content, meta)`
+
+Tech specifications:
 
 - languages: Go, HTML
 - libraries: [HTMX](https://htmx.org), [echo](https://echo.labstack.com), [Tailwind CSS](https://tailwindcss.com/)
