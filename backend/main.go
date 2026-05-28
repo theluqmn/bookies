@@ -3,8 +3,7 @@ package main
 import (
 	"fmt"
 
-	"main/books"
-	"main/users"
+	"main/routes"
 	"main/util"
 
 	"github.com/labstack/echo/v4"
@@ -27,11 +26,11 @@ func main() {
 	})
 
 	// API URLs
-	e.POST("/signup", users.SignupHandler)
-	e.POST("/login", users.LoginHandler)
-	e.POST("/books", books.AddBookHandler)
+	e.POST("/signup", routes.SignupHandler)
+	e.POST("/login", routes.LoginHandler)
+	e.POST("/books", routes.AddBookHandler)
 
-	// HTMX URLs
+	// frontend URLs
 	e.File("/", "../frontend/index.html")
 	e.File("/signup", "../frontend/signup.html")
 

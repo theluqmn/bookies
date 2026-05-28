@@ -1,0 +1,117 @@
+package routes
+
+import (
+	"fmt"
+	"crypto/rand"
+	"encoding/base64"
+	"main/util"
+	"net/http"
+	"strings"
+	"time"
+
+	"github.com/labstack/echo/v4"
+	"golang.org/x/crypto/bcrypt"
+)
+
+var sessions = make(map[string]string) // stores session tokens
+
+// route handlers
+
+// POST /signup
+func SignupHandler(c echo.Context) error {
+	id := strings.ToLower(c.FormValue("id")) // required, 4 to 64 characters
+	if id == "" {
+		return c.JSON(400, "an ID is required!")
+	} else if !util.InputLongEnough(id, 4, 64) {
+		return c.JSON(400, "ID must be between 4 and 64 characters long")
+	} else if userExists(id) {
+		return c.JSON(400, "the ID given already exists")
+	}
+	
+	name := c.FormValue("name") // optional, defaults to the ID, 2 to 96 characters
+	if name == "" {
+		name = id
+	} else if !util.InputLongEnough(name, 2, 96) {
+		return c.JSON(400, "name must be between 2 and 96 characters long")
+	}
+
+	password := c.FormValue("password") // required, 8 to 64 characters
+	if password == "" {
+		return c.JSON(400, "a password is required!")
+	} else if !util.InputLongEnough(password, 8, 64) {
+		return c.JSON(400, "password must be between 8 and 64 characters long")
+	}
+	password = util.Hash(password)
+
+	if signUp(id, name, password) == false {
+		return c.JSON(500, "failed to sign up user!")
+	}
+
+	return c.JSON(200, "<p>user sign up successful!</p>")
+}
+
+// POST /login
+func LoginHandler(c echo.Context) error {
+	// authentication
+	id := strings.ToLower(c.FormValue("id"))
+	if id == "" {
+		return c.JSON(400, "an ID is required!")
+	} else if !userExists(id) {
+		return c.JSON(404, "user not found!")
+	}
+
+	password := c.FormValue("password")
+	if password == "" {
+		return c.JSON(400, "a password is required!")
+	}
+	if !comparePassword(id, password) {
+		return c.JSON(401, "invalid password!")
+	}
+
+	// session token and cookie generation
+	b := make([]byte, 32)
+	rand.Read(b)
+	sessionToken := base64.StdEncoding.EncodeToString(b)
+	sessions[sessionToken] = id
+
+	cookie := &http.Cookie{
+		Name:     "session_token",
+		Value:    sessionToken,
+		Expires:  time.Now().Add(48 * time.Hour),
+		HttpOnly: true,
+		Path:     "/",
+	}
+	c.SetCookie(cookie)
+
+	return c.JSON(200, "user login successful")
+}
+
+// utility functions
+
+func signUp(id string, name string, password string) bool {
+	fmt.Println(id, name, password)
+
+	_, err := util.DB.Exec("INSERT INTO users (id, name, password) VALUES (?, ? ,?);", id, name, password)
+	if err != nil { fmt.Println(err); return false }
+
+	return true
+}
+
+func userExists(id string) bool {
+	var count int
+	err := util.DB.QueryRow("SELECT COUNT(*) FROM users WHERE id = ?", id).Scan(&count)
+	if err != nil { return false }
+
+	return count > 0
+}
+
+func comparePassword(id string, password string) bool {
+	var hashed string
+	err := util.DB.QueryRow("SELECT password FROM users WHERE id = ?", id).Scan(&hashed)
+	if err != nil { return false }
+
+	err = bcrypt.CompareHashAndPassword([]byte(hashed), []byte(password))
+	if err != nil { return false }
+
+	return true
+}
