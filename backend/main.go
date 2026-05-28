@@ -4,12 +4,16 @@ import (
 	"fmt"
 
 	"main/users"
+	"main/util"
 
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
 	fmt.Println("starting server")
+
+	// initialisation
+	_ = util.Init("./database/database.sqlite")
 
 	e := echo.New()
 	e.HideBanner = true

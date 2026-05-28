@@ -3,7 +3,7 @@
 ## Backend
 
 - user
-  - [ ] signup
+  - [x] signup
   - [ ] login
   - [ ] delete account
 - books

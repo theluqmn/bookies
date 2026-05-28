@@ -7,7 +7,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func SignUpHandler(c echo.Context) error {
+func SignUpHandler(c echo.Context) error { // POST /signup
 	var id string // required, between 4 and 64 characters
 	q1 := strings.ToLower(c.QueryParam("id"))
 	if q1 == "" {
