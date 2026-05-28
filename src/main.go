@@ -32,8 +32,8 @@ func main() {
 	e.POST("/essays", routes.EssayCreateHandler)
 
 	// frontend URLs
-	e.File("/", "../frontend/index.html")
-	e.File("/signup", "../frontend/signup.html")
+	e.File("/", "../web/index.html")
+	e.File("/signup", "../web/signup.html")
 
 	fmt.Println("server is now online")
 	e.Logger.Fatal(e.Start(":6969"))
