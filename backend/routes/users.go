@@ -2,20 +2,17 @@ package routes
 
 import (
 	"fmt"
-	"crypto/rand"
-	"encoding/base64"
-	"main/util"
 	"net/http"
 	"strings"
 	"time"
+	
+	"main/util"
 
 	"github.com/labstack/echo/v4"
 	"golang.org/x/crypto/bcrypt"
 )
 
 var sessions = make(map[string]string) // stores session tokens
-
-// route handlers
 
 // POST /signup
 func SignupHandler(c echo.Context) error {
@@ -68,15 +65,10 @@ func LoginHandler(c echo.Context) error {
 		return c.JSON(401, "invalid password!")
 	}
 
-	// session token and cookie generation
-	b := make([]byte, 32)
-	rand.Read(b)
-	sessionToken := base64.StdEncoding.EncodeToString(b)
-	sessions[sessionToken] = id
-
+	// cookie generation
 	cookie := &http.Cookie{
 		Name:     "session_token",
-		Value:    sessionToken,
+		Value:    util.SessionTokenCreate(id),
 		Expires:  time.Now().Add(48 * time.Hour),
 		HttpOnly: true,
 		Path:     "/",

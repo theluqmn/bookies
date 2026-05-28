@@ -1,3 +1,5 @@
+// database-related functions that are reusable
+
 package util
 
 import (
@@ -20,7 +22,10 @@ func Init(sqliteFile string) error {
 	_, err = DB.Exec("CREATE TABLE IF NOT EXISTS books (id TEXT PRIMARY KEY, title TEXT, author TEXT, description TEXT)")
 	if err != nil { return err }
 
-	_, err = DB.Exec("CREATE TABLE IF NOT EXISTS essays (id TEXT PRIMARY KEY, language TEXT, title TEXT, author TEXT, content TEXT, meta TEXT")
+	_, err = DB.Exec("CREATE TABLE IF NOT EXISTS essays (id TEXT PRIMARY KEY, language TEXT, author TEXT, title TEXT, content TEXT, meta TEXT")
+	if err != nil { return err }
+
+	_, err = DB.Exec("CREATE TABLE IF NOT EXISTS sessions (id TEXT, token TEXT)")
 	if err != nil { return err }
 
 	return DB.Ping()
