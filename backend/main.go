@@ -26,7 +26,8 @@ func main() {
 	})
 
 	e.POST("/signup", users.SignUpHandler)
+	e.POST("/login", users.LoginHandler)
 
 	fmt.Println("server is now online")
-	e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start(":6969"))
 }

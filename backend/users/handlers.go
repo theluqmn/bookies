@@ -1,11 +1,19 @@
+// handles routes for users, as well as input validation
+
 package users
 
 import (
+	"crypto/rand"
+	"encoding/base64"
 	"main/util"
+	"net/http"
 	"strings"
+	"time"
 
 	"github.com/labstack/echo/v4"
 )
+
+var sessions = make(map[string]string)
 
 func SignUpHandler(c echo.Context) error { // POST /signup
 	var id string // required, between 4 and 64 characters
@@ -40,4 +48,41 @@ func SignUpHandler(c echo.Context) error { // POST /signup
 	}
 
 	return c.JSON(200, "user sign up successful!")
+}
+
+func LoginHandler(c echo.Context) error { // POST /login
+	// authentication
+	var id string
+	q1 := strings.ToLower(c.QueryParam("id"))
+	if q1 == "" {
+		return c.JSON(400, "an ID is required!")
+	} else if !userExists(q1) {
+		return c.JSON(404, "user not found!")
+	}
+	id = q1
+
+	q2 := c.QueryParam("password")
+	if q2 == "" {
+		return c.JSON(400, "a password is required!")
+	}
+	if !comparePassword(id, q2) {
+		return c.JSON(401, "invalid password!")
+	}
+
+	// session token and cookie generation
+	b := make([]byte, 32)
+	rand.Read(b)
+	sessionToken := base64.StdEncoding.EncodeToString(b)
+	sessions[sessionToken] = id
+
+	cookie := &http.Cookie{
+		Name:     "session_token",
+		Value:    sessionToken,
+		Expires:  time.Now().Add(48 * time.Hour),
+		HttpOnly: true,
+		Path:     "/",
+	}
+	c.SetCookie(cookie)
+
+	return c.JSON(200, "user login successful")
 }
