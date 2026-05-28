@@ -17,7 +17,7 @@ var sessions = make(map[string]string)
 
 func SignupHandler(c echo.Context) error { // POST /signup
 	var id string // required, 4 to 64 characters
-	q1 := strings.ToLower(c.QueryParam("id"))
+	q1 := strings.ToLower(c.FormValue("id"))
 	if q1 == "" {
 		return c.JSON(400, "an ID is required!")
 	} else if !util.InputLongEnough(q1, 4, 64) {
@@ -28,7 +28,7 @@ func SignupHandler(c echo.Context) error { // POST /signup
 	id = q1
 
 	var name string // optional, defaults to the ID, 2 to 96 characters
-	q2 := c.QueryParam("name")
+	q2 := c.FormValue("name")
 	if q2 == "" {
 		q2 = id
 	} else if !util.InputLongEnough(q2, 2, 96) {
@@ -37,7 +37,7 @@ func SignupHandler(c echo.Context) error { // POST /signup
 	name = q2
 
 	var password string // required, 8 to 64 characters
-	q3 := c.QueryParam("password")
+	q3 := c.FormValue("password")
 	if q3 == "" {
 		return c.JSON(400, "a password is required!")
 	} else if !util.InputLongEnough(q3, 8, 64) {
@@ -49,13 +49,13 @@ func SignupHandler(c echo.Context) error { // POST /signup
 		return c.JSON(500, "failed to sign up user!")
 	}
 
-	return c.JSON(200, "user sign up successful!")
+	return c.JSON(200, "<p>user sign up successful!</p>")
 }
 
 func LoginHandler(c echo.Context) error { // POST /login
 	// authentication
 	var id string
-	q1 := strings.ToLower(c.QueryParam("id"))
+	q1 := strings.ToLower(c.FormValue("id"))
 	if q1 == "" {
 		return c.JSON(400, "an ID is required!")
 	} else if !userExists(q1) {
@@ -63,7 +63,7 @@ func LoginHandler(c echo.Context) error { // POST /login
 	}
 	id = q1
 
-	q2 := c.QueryParam("password")
+	q2 := c.FormValue("password")
 	if q2 == "" {
 		return c.JSON(400, "a password is required!")
 	}

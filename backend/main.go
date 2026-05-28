@@ -32,6 +32,8 @@ func main() {
 	e.POST("/books", books.AddBookHandler)
 
 	// HTMX URLs
+	e.File("/", "../frontend/index.html")
+	e.File("/signup", "../frontend/signup.html")
 
 	fmt.Println("server is now online")
 	e.Logger.Fatal(e.Start(":6969"))
