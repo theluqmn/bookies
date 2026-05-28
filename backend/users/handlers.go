@@ -22,6 +22,8 @@ func SignupHandler(c echo.Context) error { // POST /signup
 		return c.JSON(400, "an ID is required!")
 	} else if !util.InputLongEnough(q1, 4, 64) {
 		return c.JSON(400, "ID must be between 4 and 64 characters long")
+	} else if userExists(q1) {
+		return c.JSON(400, "the ID given already exists")
 	}
 	id = q1
 
