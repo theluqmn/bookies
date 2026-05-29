@@ -6,6 +6,15 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+type Essay struct {
+	ID string `json:"id"`
+	Language string `json:"language"`
+	Author string `json:"author"`
+	Title string `json:"title"`
+	Content string `json:"content"`
+	Meta string `json:"meta"`
+}
+
 // handlers
 
 // POST /essays
@@ -49,6 +58,24 @@ func EssayCreateHandler(c echo.Context) error {
 	}
 		
 	return c.JSON(201, "Essay created successfully!")
+}
+
+// GET /essays
+func EssayGetHandler(c echo.Context) error {
+	var essays []Essay
+	rows, err := util.DB.Query("SELECT id, language, author, title, content, meta FROM essays")
+	if err != nil { util.LogError(err); return c.JSON(500, "Failed to fetch essays.") }
+	defer rows.Close()
+
+	for rows.Next() {
+		var essay Essay
+		if err := rows.Scan(&essay.ID, &essay.Language, &essay.Author, &essay.Title, &essay.Content, &essay.Meta); err != nil {
+			util.LogError(err)
+		}
+		essays = append(essays, essay)
+	}
+
+	return c.JSON(200, essays)
 }
 
 // utility functions

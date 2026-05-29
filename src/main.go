@@ -24,6 +24,7 @@ func main() {
 	e.POST("/login", routes.LoginHandler)
 	// e.POST("/books", routes.AddBookHandler)
 	e.POST("/essays", routes.EssayCreateHandler)
+	e.GET("/essays", routes.EssayGetHandler)
 
 	// frontend URLs
 	e.File("/", "../web/index.html")
