@@ -1,8 +1,6 @@
 package routes
 
 import (
-	"fmt"
-	
 	"main/util"
 	
 	"github.com/labstack/echo/v4"
@@ -57,7 +55,7 @@ func EssayCreateHandler(c echo.Context) error {
 
 func essayCreate(id string, language string, author string, title string, content string, meta string) bool {
 	_, err := util.DB.Exec("INSERT INTO essays (id, language, author, title, content, meta) VALUES (?, ?, ?, ?, ?, ?)", id, language, author, title, content, meta)
-	if err != nil { fmt.Println(err); return false }
+	if err != nil { util.LogError(err); return false }
 	
 	return true
 }

@@ -5,9 +5,9 @@ package util
 import (
 	"crypto/rand"
 	"encoding/base64"
-	"fmt"
 	"os"
 	"os/exec"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -33,8 +33,13 @@ func GenerateRandomID(size int) string {
 
 	_, err := rand.Read(b)
 	if err != nil {
-		fmt.Println(err)
+		LogError(err)
 	}
 	
 	return base64.URLEncoding.WithPadding(base64.NoPadding).EncodeToString(b)
+}
+
+func GetFormattedTime() string {
+	t := time.Now()
+	return t.Format("2006-01-02 15:04:05.00")
 }

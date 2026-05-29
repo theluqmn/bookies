@@ -3,7 +3,6 @@
 package util
 
 import (
-	"fmt"
 	"crypto/rand"
 	"encoding/base64"
 )
@@ -14,7 +13,7 @@ func SessionTokenCreate(id string) string {
 	token := base64.StdEncoding.EncodeToString(b)
 
 	_, err := DB.Exec("INSERT INTO sessions (id, token) VALUES (?, ?);", id, token)
-	if err != nil { fmt.Println(err); return "" }
+	if err != nil { LogError(err); return "" }
 	
 	return token
 }
@@ -22,6 +21,6 @@ func SessionTokenCreate(id string) string {
 func SessionTokenVerify(token string) string {
 	var id string
 	err := DB.QueryRow("SELECT id FROM sessions WHERE token = ?;", token).Scan(&id)
-	if err != nil { return "" }
+	if err != nil { LogError(err); return "" }
 	return id
 }

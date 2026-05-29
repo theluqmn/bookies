@@ -6,6 +6,8 @@ require github.com/labstack/echo/v4 v4.15.2
 
 require github.com/mattn/go-sqlite3 v1.14.44
 
+require github.com/fatih/color v1.19.0
+
 require (
 	github.com/labstack/gommon v0.5.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect

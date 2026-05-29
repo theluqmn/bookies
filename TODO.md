@@ -5,7 +5,7 @@ Bookies to-do list.
 ## Backend (API)
 
 - system
-  - [ ] proper logging
+  - [x] proper logging
 - user
   - [x] signup
   - [x] login
@@ -15,7 +15,7 @@ Bookies to-do list.
   - [ ] fetch all user feedbacks
   - [ ] customisable profile
 - essays
-  - [ ] create essays (english)
+  - [x] create essays (english)
   - [ ] fetch essays
   - [ ] essay scoring
 - feedback system
