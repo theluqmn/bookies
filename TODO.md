@@ -11,7 +11,7 @@ Bookies to-do list.
   - [x] login
   - [x] authentication-layer
   - [ ] user settings/config
-  - [ ] fetch all user essays
+  - [x] fetch all user essays
   - [ ] fetch all user feedbacks
   - [ ] customisable profile
 - essays

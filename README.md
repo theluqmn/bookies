@@ -1,7 +1,8 @@
 # Bookies - a bookworm's heaven
 
 > [!NOTE]
-> For now, Bookies have pivoted towards hosting user-written essays instead of reviews of books.
+> For now, Bookies have pivoted towards hosting user-written essays instead of
+reviews of books.
 
 - Write essays for other users to read and rate!
 - Earn points!
@@ -18,7 +19,8 @@ Database schema:
 Tech specifications:
 
 - languages: Go, HTML
-- libraries: [HTMX](https://htmx.org), [echo](https://echo.labstack.com), [Tailwind CSS](https://tailwindcss.com/)
+- libraries: [HTMX](https://htmx.org), [echo](https://echo.labstack.com),
+[Tailwind CSS](https://tailwindcss.com/)
 - server: [HackClub Nest](https://hackclub.app)
 
 ## Notes
