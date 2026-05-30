@@ -7,43 +7,48 @@
         <title>Bookies</title>
 
         <!-- ibm plex mono and ibm plex sans font -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100..700;1,100..700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet" />
 
         <!-- tailwind css -->
         <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = { theme: { extend: { fontFamily: {
-                sans: ['"IBM Plex Sans"', "sans-serif"], mono: ['"IBM Plex Mono"', "monospace"]
-            }}}};
-        </script>
+        <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['"IBM Plex Sans"', "sans-serif"], mono: ['"IBM Plex Mono"', "monospace"]}}}}</script>
 
         <!-- htmx -->
         <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous" ></script>
     </head>
 
-    <body class="p-4 bg-[rgb(200,200,200)]">
-        <header class="p-2 flex flex-row justify-between items-center w-6/12 mx-auto bg-[rgb(20,20,20)]">
-            <p class="text-white text-xl font-sans"><i>Bookies</i></p>
-            <div class="flex flex-row gap-4">
-                <button
-                    class="p-1 bg-blue-600 hover:bg-blue-700 duration-300 text-white text-md font-sans"
-                    onclick="window.open('', '_blank')"
-                >Books</button>
-                <button
-                    class="p-1 bg-blue-600 hover:bg-blue-700 duration-300 text-white text-md font-sans"
-                    onclick="window.open('', '_blank')"
-                >Reviews</button>
-            </div>
-            <button
-                class="p-1 bg-blue-600 hover:bg-blue-700 duration-300 text-white text-md font-sans"
-                onclick="window.open('https://example.com', '_blank')"
-            >Login / Signup</button>
-        </header>
+    <body class="p-2 flex flex-col gap-2 bg-white">
+        <header class="p-4 md:w-7/12 mx-auto flex flex-row justify-between items-center
+        bg-[rgb(245,245,245)] font-medium text-sm
+        outline outline-1 outline-[rgb(50,50,50)]">
+            <p class="text-lg font-semibold italic">Bookies</p>
 
-        <main>
-            <h1 class="text-white font-sans">Hello world</h1>
+            <div class="flex flex-row gap-5">
+                <a href="/" class="pl-4 pr-4 p-1 outline outline-1 outline-[rgb(50,50,50)] bg-[rgb(245,245,245)] hover:bg-[rgb(200,200,200)] duration-300">
+                    Home
+                </a>
+                
+                <a href="/essays" class="pl-4 pr-4 p-1 outline outline-1 outline-[rgb(50,50,50)] bg-[rgb(245,245,245)] hover:bg-[rgb(200,200,200)] duration-300">
+                    Essays
+                </a>
+            </div>
+
+            <a href="/signup" class="p-1 bg-black hover:bg-[rgb(50,50,50)] duration-300 text-white text-sm font-sans">Login / Signup</a>
+        </header>
+        
+        <main class="p-4 md:w-7/12 mx-auto
+        bg-[rgb(245,245,245)] font-medium text-sm
+        outline outline-1 outline-[rgb(50,50,50)]">
+            <p>thing</p>
         </main>
+
+        <footer class="p-4 md:w-7/12 mx-auto
+        bg-[rgb(245,245,245)] font-medium text-sm
+        outline outline-1 outline-[rgb(50,50,50)]">
+            <p>
+                Designed and developed by <a href="https://theluqmn.github.io" class="text-blue-700 hover:underline">Luqman</a>.
+                Hosted on <a href="https://hackclub.app" class="text-blue-700 hover:underline">Hack Club Nest</a>.
+            </p>
+        </footer>
     </body>
 </html>

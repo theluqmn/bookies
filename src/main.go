@@ -19,16 +19,15 @@ func main() {
 	e.HideBanner = true
 	e.HidePort = true
 
-	// API URLs
-	e.POST("/signup", routes.SignupHandler)
-	e.POST("/login", routes.LoginHandler)
-	// e.POST("/books", routes.AddBookHandler)
-	e.POST("/essays", routes.EssayCreateHandler)
-	e.GET("/essays", routes.EssayGetHandler)
-
 	// frontend URLs
-	e.File("/", "../web/index.html")
-	e.File("/signup", "../web/signup.html")
+	e.File("/", "./web/index.html")
+	e.File("/signup", "./web/signup.html")
+
+	// API URLs
+	e.POST("/api/signup", routes.SignupHandler)
+	e.POST("/api/login", routes.LoginHandler)
+	e.POST("/api/essays", routes.EssayCreateHandler)
+	e.GET("/api/essays", routes.EssayGetHandler)
 
 	util.LogSuccess("now online")
 	e.Logger.Fatal(e.Start(":6969"))
