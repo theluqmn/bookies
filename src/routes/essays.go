@@ -78,6 +78,14 @@ func EssayGetHandler(c echo.Context) error {
 	return c.JSON(200, essays)
 }
 
+// GET /essays/user
+func UserEssayGetHandler(c echo.Context) error {
+	var user_id string = c.QueryParam("user_id")
+	essays, err := essayGetByUser(user_id)
+	if err != nil { util.LogError(err); return c.JSON(500, "Failed to fetch essays.") }
+	return c.JSON(200, essays)
+}
+
 // utility functions
 
 func essayCreate(id string, language string, author string, title string, content string, meta string) bool {
@@ -85,4 +93,22 @@ func essayCreate(id string, language string, author string, title string, conten
 	if err != nil { util.LogError(err); return false }
 	
 	return true
+}
+
+func essayGetByUser(user_id string) ([]Essay, error) {
+	var essays []Essay
+	rows, err := util.DB.Query("SELECT id, language, author, title, content, meta FROM essays WHERE author = ?", user_id)
+	if err != nil { return nil, err }
+	defer rows.Close()
+
+	for rows.Next() {
+		var essay Essay
+		if err := rows.Scan(&essay.ID, &essay.Language, &essay.Author, &essay.Title, &essay.Content, &essay.Meta); err != nil {
+			return nil, err
+		}
+		
+		essays = append(essays, essay)
+	}
+
+	return essays, nil
 }
