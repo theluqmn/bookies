@@ -15,33 +15,34 @@ import (
 func SignupHandler(c echo.Context) error {
 	id := strings.ToLower(c.FormValue("id")) // required, 4 to 64 characters
 	if id == "" {
-		return c.JSON(400, "an ID is required!")
+		return c.HTML(http.StatusBadRequest, "<p>An ID is required!</p>")
 	} else if !util.InputLongEnough(id, 4, 64) {
-		return c.JSON(400, "ID must be between 4 and 64 characters long")
+		return c.HTML(http.StatusBadRequest, "<p>ID must be between 4 and 64 characters long.</p>")
 	} else if userExists(id) {
-		return c.JSON(400, "the ID given already exists")
+		return c.HTML(http.StatusBadRequest, "<p>The ID given already exists.</p>")
 	}
 	
 	name := c.FormValue("name") // optional, defaults to the ID, 2 to 96 characters
 	if name == "" {
 		name = id
 	} else if !util.InputLongEnough(name, 2, 96) {
-		return c.JSON(400, "name must be between 2 and 96 characters long")
+		return c.HTML(http.StatusBadRequest, "<p>The name must be between 2 and 96 characters long.</p>")
 	}
 
 	password := c.FormValue("password") // required, 8 to 64 characters
 	if password == "" {
-		return c.JSON(400, "a password is required!")
+		return c.HTML(http.StatusBadRequest, "<p>A password is required!</p>")
 	} else if !util.InputLongEnough(password, 8, 64) {
-		return c.JSON(400, "password must be between 8 and 64 characters long")
+		return c.HTML(http.StatusBadRequest, "<p>Password must be between 8 and 64 characters long.</p>")
 	}
 	password = util.Hash(password)
 
 	if signUp(id, name, password) == false {
-		return c.JSON(500, "failed to sign up user!")
+		return c.HTML(http.StatusInternalServerError, "<p>The server failed to sign you up.</p>")
 	}
 
-	return c.JSON(200, "<p>user sign up successful!</p>")
+	c.Response().Header().Set("HX-Trigger", "formSuccess")
+	return c.HTML(http.StatusCreated, "<p>Sign up successful! Redirecting...</p>")
 }
 
 // POST /login
@@ -49,17 +50,17 @@ func LoginHandler(c echo.Context) error {
 	// authentication
 	id := strings.ToLower(c.FormValue("id"))
 	if id == "" {
-		return c.JSON(400, "an ID is required!")
+		return c.HTML(http.StatusBadRequest, "<p>An ID is required.</p>")
 	} else if !userExists(id) {
-		return c.JSON(404, "user not found!")
+		return c.HTML(http.StatusNotFound, "<p>The provided ID returns no existing user.</p>")
 	}
 
 	password := c.FormValue("password")
 	if password == "" {
-		return c.JSON(400, "a password is required!")
+		return c.HTML(http.StatusBadRequest, "<p>A password is required.</p>")
 	}
 	if !comparePassword(id, password) {
-		return c.JSON(401, "invalid password!")
+		return c.HTML(http.StatusUnauthorized, "<p>Invalid password.</p>")
 	}
 
 	// cookie generation
@@ -72,7 +73,8 @@ func LoginHandler(c echo.Context) error {
 	}
 	c.SetCookie(cookie)
 
-	return c.JSON(200, "user login successful")
+	c.Response().Header().Set("HX-Trigger", "formSuccess")
+	return c.HTML(http.StatusOK, "<p>Login successful! Redirecting...</p>")
 }
 
 // utility functions

@@ -11,6 +11,25 @@ Check out our [to-do list](https://github.com/theluqmn/bookies/blob/main/TODO.md
 
 ## Technical
 
+API routes:
+
+> [!NOTE]
+> The API is designed to return HTML for the HTMX frontend to simplify the
+system, hence it does not have a traditional REST API that is usable for the public.
+
+- Frontend
+  - `/` - landing page
+  - `/signup` - signup page
+  - `/login` - login page
+  - `/essays` - all essays
+- Backend
+  - `GET /` - home
+  - `POST /api/signup` - signup form
+  - `POST /api/login` - login form
+  - `POST /api/essays` - essay creation form
+  - `GET /api/essays` - fetch all essays
+  - `GET /api/essays/user` - fetch all essays from a specific user
+
 Database schema:
 
 - `users(id, name, password)`

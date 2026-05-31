@@ -15,12 +15,12 @@
         </script>
         
         <!-- htmx -->
-        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous" ></script>
+        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js"></script><script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/response-targets.js"></script>
     </head>
 
     <body class="bg-white">
-        <main class="p-4">
-          <form hx-post="http://localhost:6969/signup" hx-target="#message" hx-swap="innerHTML">
+        <main class="p-4" hx-ext="response-targets">
+          <form hx-post="http://localhost:6969/api/signup" hx-target="#message" hx-target-4xx="#message" hx-swap="innerHTML" class="flex flex-col gap-5">
             <input type="text" name="id" placeholder="Your ID">
             <input type="text" name="name" placeholder="Your display name">
             <input type="password" name="password" placeholder="Password">
